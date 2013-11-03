@@ -70,6 +70,13 @@ void to_rational(int *Al, int *Am, int *Bl, int *Bm, rational *C, rational *D, i
 	}
 }
 
+void from_rational(int *Xl, int *Xm, rational *D, int n){
+	for(int i=0; i<n; i++){
+		Xl[i] = D[i].l;
+		Xm[i] = D[i].m;
+	}	
+}
+
 rational inverse(rational x){
 	rational y;	
 	y.l = x.m;
@@ -119,33 +126,30 @@ void rozwiaz(int *Al, int *Am, int *Bl, int *Bm, int *Xl, int *Xm, int n){
 	rational *C = new rational[n*n];
 	rational *D = new rational[n];
 	to_rational(Al, Am, Bl, Bm, C, D, n);
-	wypisz_dane(C, 3);
-	wypisz_wynik(D, 3);
-	cout <<endl <<endl;
-	clean_below(C, D, 3);
-	wypisz_dane(C, 3);
-	wypisz_wynik(D, 3);
-	cout <<endl <<endl;
+	clean_below(C, D, n);
 	clean_above(C, D, n);
-	wypisz_dane(C, 3);
-	wypisz_wynik(D, 3);
-	cout <<endl <<endl;
+	from_rational(Xl, Xm, D, n);
 	delete[] C;
 	delete[] D;
+	
 }
 
-int Al[9] = {1, 2, 3, 4, 5, 6, 7, 8, 1};
-int Am[9] = {1, 1, 1, 1, 1, 1, 1, 1, 1};
-int Bl[3] = {3, 3, 3};
-int Bm[3] = {1, 1, 1};
-int Xl[3] = {1, 1, 1};
-int Xm[3] = {1, 1, 1};
+//int Al[9] = {1, 2, 3, 4, 5, 6, 7, 8, 1};
+//int Am[9] = {1, 1, 1, 1, 1, 1, 1, 1, 1};
+//int Bl[3] = {3, 3, 3};
+//int Bm[3] = {1, 1, 1};
+//int Xl[3] = {1, 1, 1};
+//int Xm[3] = {1, 1, 1};
 
 
 int main(){
 
 
-rozwiaz(Al, Am, Bl, Bm, Xl, Xm, 3);
+//rozwiaz(Al, Am, Bl, Bm, Xl, Xm, 3);
+
+//for(int i=0; i<3; i++){
+//	cout << Xl[i]<<"/"<<Xm[i]<<endl;
+//}
 
 
 return 0;
