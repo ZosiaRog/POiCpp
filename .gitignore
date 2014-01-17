@@ -1,5 +1,7 @@
 a.out
 *~
+*.gch
+projekt/milosz
 
 # Compiled Object files
 *.slo
