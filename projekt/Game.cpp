@@ -1,11 +1,27 @@
-//TODO dodaj w każdym pliku headera ifn takie jak w field.h
 #include <fstream>
 #include <string>
 #include <iostream>
+#include <utility>
 
 #include "Game.h"
 
+#include "BardCharacter.h"
+
+
+
 using namespace std;
+
+void Game::makeCharacter(char c, int x, int y){
+	pair<int, int> position(x, y);
+	switch(c){
+		case 'B': addCharacter(new BardCharacter(position)); break; //TODO dodać pozostałych i im zmienić konstruktory
+	}
+}
+
+void Game::addCharacter(Character* character){
+	characters.push_back(character);
+	map->putCharacter(character);
+}
 
 bool Game::readMap(const string filename){
 	ifstream file(filename.c_str());
@@ -23,6 +39,15 @@ bool Game::readMap(const string filename){
 		}
 
 		map = new Map(map_lines, N, M);
+
+		string c;
+		int x, y;
+		while(file >> c)
+		{
+			file >> x >> y;
+			makeCharacter(c[0], x, y);
+		}
+
 		return true;
 	}
 	return false;
@@ -30,6 +55,7 @@ bool Game::readMap(const string filename){
 
 void Game::run(){
 	initDisplay();
+
 	/*while(gramy )*/
 		refreshView();
 	stopDisplay();
@@ -46,7 +72,7 @@ void Game::refreshView(){
 	int M = map->getM();
 	for (int i = 0; i < N; i++){
 		for (int j = 0; j < M; j++){
-			cout << map->getField(i, j)->getSymbol();
+			cout << map->getField(i, j)->getSymbolToShow();
 		}
 		cout << endl;
 	}

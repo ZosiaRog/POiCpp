@@ -2,6 +2,7 @@
 #include<string>
 
 #include "Field.h"
+#include "Character.h"
 
 using namespace std;
 
@@ -18,4 +19,5 @@ class Map {
 	Map(vector<string>, int N, int M);
 	~Map();
 	Field* getField(int x, int y) { return fields[x][y]; }
+	void putCharacter(Character* character);
 };
