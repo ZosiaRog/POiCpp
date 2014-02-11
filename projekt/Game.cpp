@@ -5,8 +5,15 @@
 
 #include "Game.h"
 
-#include "BardCharacter.h"
-
+#include "1_BardCharacter.h"
+#include "1_QuackDoctorCharacter.h"
+#include "1_InnkeeperCharacter.h"
+#include "1_NeutralCharacter.h"
+#include "1_CowardCharacter.h"
+#include "1_FussyCharacter.h"
+#include "1_AgressiveCharacter.h"
+#include "1_MiloszCharacter.h"
+#include "1_SearcherCharacter.h"
 
 
 using namespace std;
@@ -15,6 +22,14 @@ void Game::makeCharacter(char c, int x, int y){
 	pair<int, int> position(x, y);
 	switch(c){
 		case 'B': addCharacter(new BardCharacter(position)); break; //TODO dodać pozostałych i im zmienić konstruktory
+		case 'Z': addCharacter(new QuackDoctorCharacter(position)); break;
+		case 'S': addCharacter(new InnkeeperCharacter(position)); break;
+		case 'M': addCharacter(new MiloszCharacter(position)); break;
+		case 'P': addCharacter(new SearcherCharacter(position)); break;
+		case 'N': addCharacter(new NeutralCharacter(position)); break;
+		case 'T': addCharacter(new CowardCharacter(position)); break;
+		case 'W': addCharacter(new FussyCharacter(position)); break;
+		case 'A': addCharacter(new AgressiveCharacter(position)); break;
 	}
 }
 

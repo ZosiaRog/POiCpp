@@ -1,0 +1,1 @@
+1_Character.h:	zmienić konstruktor drugi, żeby się losowały parametry

@@ -1,13 +1,13 @@
 // TODO Czy mapa jest prawidłowa (rozmiary i znaczki)
 #include "Map.h"
-#include "RoadField.h"
-#include "RockField.h"
-#include "HillField.h"
-#include "GrassField.h"
-#include "SwampField.h"
-#include "RiverField.h"
-#include "CaveField.h"
-#include "TreasureField.h"
+#include "2_RoadField.h"
+#include "2_RockField.h"
+#include "2_HillField.h"
+#include "2_GrassField.h"
+#include "2_SwampField.h"
+#include "2_RiverField.h"
+#include "2_CaveField.h"
+#include "2_TreasureField.h"
 
 Map::Map(vector<string> lines, int N, int M) : N(N), M(M){
 

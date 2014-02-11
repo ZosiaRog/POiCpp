@@ -6,7 +6,7 @@
 #include<list>
 
 #include "Map.h"
-#include "Character.h"
+#include "1_Character.h"
 
 using namespace std;
 
