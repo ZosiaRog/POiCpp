@@ -40,6 +40,7 @@ class Character {
 	char getSymbol(){ return symbol; }
 	int getActionPoints(){ return actual_action_points; }
 	void decreaseActionPoints(int a);
+	void changeHealth(int new_health) { health = new_health; }
 	bool verifyDeath(){ return (health > 0); }
 	pair<int, int> getPosition(){ return position; }
 	virtual void move() = 0;

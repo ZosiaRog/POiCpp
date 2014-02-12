@@ -11,8 +11,14 @@
 
 Map::Map(vector<string> lines, int N, int M) : N(N), M(M){
 
+	vector<Field*> rocks_row;
+	for(int j=0; j<M+2; j++){
+		rocks_row.push_back(new RockField());
+	}
+	fields.push_back(rocks_row);
 	for(int i=0; i<N; i++){
 		vector<Field*> row;
+		row.push_back(new RockField());
 		for(int j=0; j<M; j++){
 			switch(lines[i][j]){
 				case '=': row.push_back(new RoadField()); break;
@@ -26,8 +32,10 @@ Map::Map(vector<string> lines, int N, int M) : N(N), M(M){
 		//		default: std::cerr << "Niepoprawna mapa." << std::endl; TODO Dodaj wyjątek
 			}
 		}
+		row.push_back(new RockField());
 		fields.push_back(row);
 	}
+	fields.push_back(rocks_row);
 }
 
 void Map::putCharacter(Character* character){

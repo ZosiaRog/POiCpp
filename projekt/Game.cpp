@@ -85,8 +85,8 @@ void Game::stopDisplay(){}
 void Game::refreshView(){
 	int N = map->getN();
 	int M = map->getM();
-	for (int i = 0; i < N; i++){
-		for (int j = 0; j < M; j++){
+	for (int i = 0; i < N+2; i++){
+		for (int j = 0; j < M+2; j++){
 			cout << map->getField(i, j)->getSymbolToShow();
 		}
 		cout << endl;

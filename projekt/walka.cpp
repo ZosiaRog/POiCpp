@@ -1,5 +1,9 @@
-AgressiveCharacter() : Character('A', 2, 100, 1, 0, 0, false){}		//(char symbol, action_points, health, strenght)
-	virtual void move();
+zadane obrażenia = zaokr(sila przeciwnika ∗ (zdrowie przeciwnika/100) ∗ (1.0 + bron przeciwnika) ∗ (1.0 − nasza zbroja))
 
+
+
+attack_effectiveness(character* Y, character* X) = (Y->getStrengh())*((Y->getHealth())/100)*(1.0 + Y->getWeapon())*(1.0 - X->getArmor());
+
+new_health(character* Y) = X->getHealth() - attack_effectiveness(Y, X);
 
 
