@@ -1,3 +1,6 @@
+#ifndef _MAP_H_
+#define _MAP_H_
+
 #include<vector>
 #include<string>
 #include <utility>
@@ -30,3 +33,5 @@ class Map {
 	Field* getTreasureField(){ return treasure_field;}
 	vector<Field*> getNeighbourhood(pair<int, int> place);
 };
+
+#endif

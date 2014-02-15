@@ -17,7 +17,6 @@ using namespace std;
 
 void Game::makeCharacter(char c, int x, int y){
 	pair<int, int> position(x, y);
-	cout << " Making " << c << " at " << x << ", " << y << endl;
 	switch(c){
 		case 'B': addStaticCharacter(new BardCharacter(position)); break; //TODO dodać pozostałych i im zmienić konstruktory
 		case 'Z': addStaticCharacter(new QuackDoctorCharacter(position)); break;
@@ -76,17 +75,13 @@ bool Game::gameOver(){
 }
 
 void Game::run(){
-	initDisplay();
+	display.init();
 
 	list<FightingCharacter*>::iterator current = fighting_characters.begin();	
-	cout << "Characters.size() == " << fighting_characters.size() << endl;
 	while(!gameOver()){
-		cout << "Iteracja" << endl;
 		if(!((*current)->isDead())){
-			cout << "not dead " << (*current)->getSymbol() << endl;
 			pair<int, int> position = (*current)->getPosition(); 
 			Field* wanted_field = (*current)->move(map->getNeighbourhood(position));
-			cout << "got move" << endl;
 			if(wanted_field != NULL){
 				if(wanted_field->tryToEnter(*current)) {
 					if((*current)->isDead()) {
@@ -97,14 +92,12 @@ void Game::run(){
 				}
 				
 			}
-		} else {
-			cout << "dead " << (*current)->getSymbol() << endl;
 		}
 		current++;
 		if(current == fighting_characters.end()) current = fighting_characters.begin();
-		refreshView();
+		display.refreshView(map, milosz);
 	}
-	stopDisplay();
+	display.stop();
 }
 
 bool Game::init(const string file){
@@ -112,18 +105,6 @@ bool Game::init(const string file){
 	return true;
 }
 
-void Game::initDisplay(){}
-void Game::stopDisplay(){}
-void Game::refreshView(){
-	int N = map->getN();
-	int M = map->getM();
-	for (int i = 0; i < N+2; i++){
-		for (int j = 0; j < M+2; j++){
-			cout << map->getField(i, j)->getSymbolToShow();
-		}
-		cout << endl;
-	}
-}
 
 Game::~Game(){
 	// TODO: usuń mapę i charactersy

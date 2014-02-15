@@ -47,13 +47,7 @@ class SwampField : public Field {
 	SwampField(pair<int, int> position) : Field('&', 2, position){
 		srand(time(NULL));
 		int l = rand();
-		cout << l << endl;
 		safe = l % 2;
-		if(safe){
-			cout << "Safe swamp" << endl;
-		} else{
-			cout << "Killing swamp" << endl;
-		}
 	}
 	virtual void interactWith(FightingCharacter* a);
 };

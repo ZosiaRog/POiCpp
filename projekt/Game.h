@@ -8,6 +8,7 @@
 #include "Map.h"
 #include "Character.h"
 #include "MiloszCharacter.h"
+#include "Display.h"
 
 using namespace std;
 
@@ -17,15 +18,13 @@ class Game {
 	void addStaticCharacter(Character* character);
 	void addFightingCharacter(FightingCharacter* character);
 	bool readMap(const string filename);
-	void initDisplay();
-	void stopDisplay();
-	void refreshView();
 	bool gameOver();
 
 	MiloszCharacter* milosz;
 	Map* map;
 	list<Character*> static_characters;
 	list<FightingCharacter*> fighting_characters;
+	Display display;
 
   public:
 	void run();

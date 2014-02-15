@@ -1,17 +1,17 @@
 #include "MiloszCharacter.h"
 
+#include <ncurses.h>
+
+
 Field* MiloszCharacter::move(vector <Field*> neighbourhood){ 
+
 	while(true){
-		char x;
-		cout << "ACTION PTS: " << actual_action_points << " HPTS: " << health << endl;
-		cout << "Podaj kierunek (g, d, l, p): " << endl;
-		cin >> x;
-		switch (x) {
-			case 'g': return neighbourhood[1]; break;
-			case 'd': return neighbourhood[3]; break;
-			case 'l': return neighbourhood[0]; break;
-			case 'p': return neighbourhood[2]; break;
-			default: cout << "Nieprawidłowy znak." << endl;
+		int c = getch();
+		switch (c) {
+			case KEY_UP: return neighbourhood[1]; break;
+			case KEY_DOWN: return neighbourhood[3]; break;
+			case KEY_LEFT: return neighbourhood[0]; break;
+			case KEY_RIGHT: return neighbourhood[2]; break;
 		}
 	}
 }
