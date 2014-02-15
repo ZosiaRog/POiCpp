@@ -4,37 +4,36 @@
 #include <utility>
 
 #include "Game.h"
-
-#include "1_BardCharacter.h"
-#include "1_QuackDoctorCharacter.h"
-#include "1_InnkeeperCharacter.h"
-#include "1_NeutralCharacter.h"
-#include "1_CowardCharacter.h"
-#include "1_FussyCharacter.h"
-#include "1_AgressiveCharacter.h"
-#include "1_MiloszCharacter.h"
-#include "1_SearcherCharacter.h"
+#include "IntelligentCharacters.h"
+#include "WildCharacters.h"
+#include "MiloszCharacter.h"
+#include "SearcherCharacter.h"
 
 
 using namespace std;
 
 void Game::makeCharacter(char c, int x, int y){
 	pair<int, int> position(x, y);
+	cout << " Making " << c << " at " << x << ", " << y << endl;
 	switch(c){
-		case 'B': addCharacter(new BardCharacter(position)); break; //TODO dodać pozostałych i im zmienić konstruktory
-		case 'Z': addCharacter(new QuackDoctorCharacter(position)); break;
-		case 'S': addCharacter(new InnkeeperCharacter(position)); break;
-		case 'M': addCharacter(new MiloszCharacter(position)); break;
-		case 'P': addCharacter(new SearcherCharacter(position)); break;
-		case 'N': addCharacter(new NeutralCharacter(position)); break;
-		case 'T': addCharacter(new CowardCharacter(position)); break;
-		case 'W': addCharacter(new FussyCharacter(position)); break;
-		case 'A': addCharacter(new AgressiveCharacter(position)); break;
+		case 'B': addStaticCharacter(new BardCharacter(position)); break; //TODO dodać pozostałych i im zmienić konstruktory
+		case 'Z': addStaticCharacter(new QuackDoctorCharacter(position)); break;
+		case 'S': addStaticCharacter(new InnkeeperCharacter(position)); break;
+		case 'M': addFightingCharacter(new MiloszCharacter(position)); break;
+		case 'P': addFightingCharacter(new SearcherCharacter(position)); break;
+		case 'N': addFightingCharacter(new NeutralCharacter(position)); break;
+		case 'T': addFightingCharacter(new CowardCharacter(position)); break;
+		case 'W': addFightingCharacter(new FussyCharacter(position)); break;
+		case 'A': addFightingCharacter(new AgressiveCharacter(position)); break;
 	}
 }
 
-void Game::addCharacter(Character* character){
-	characters.push_back(character);
+void Game::addStaticCharacter(Character* character){
+	static_characters.push_back(character);
+	map->putCharacter(character);
+}
+void Game::addFightingCharacter(FightingCharacter* character){
+	fighting_characters.push_back(character);
 	map->putCharacter(character);
 }
 
@@ -71,8 +70,28 @@ bool Game::readMap(const string filename){
 void Game::run(){
 	initDisplay();
 
-	/*while(gramy )*/
+	list<FightingCharacter*>::iterator current = fighting_characters.begin();	
+	cout << "Characters.size() == " << fighting_characters.size() << endl;
+	while(!gameOver()){
+		cout << "Iteracja" << endl;
+		if(!((*current)->isDead())){
+			vector<Field*> neighbourhood;
+			Field* wanted_field = (*current)->move(neighbourhood);
+			if(wanted_field != NULL){
+				if(wanted_field->tryToEnter(*current)) {
+					if((*current)->isDead()) {
+						map->buryDead(*current);
+					} else {
+						map->moveCharacter(*current, wanted_field);
+					}
+				}
+				
+			}
+		}
+		current++;
+		if(current == fighting_characters.end()) current = fighting_characters.begin();
 		refreshView();
+	}
 	stopDisplay();
 }
 

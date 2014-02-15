@@ -6,21 +6,24 @@
 #include<list>
 
 #include "Map.h"
-#include "1_Character.h"
+#include "Character.h"
 
 using namespace std;
 
 class Game {
   private:
 	void makeCharacter(char c, int x, int y);
-	void addCharacter(Character* character);
+	void addStaticCharacter(Character* character);
+	void addFightingCharacter(FightingCharacter* character);
 	bool readMap(const string filename);
 	void initDisplay();
 	void stopDisplay();
 	void refreshView();
+	bool gameOver() {return false;}
 
 	Map* map;
-	list<Character*> characters;
+	list<Character*> static_characters;
+	list<FightingCharacter*> fighting_characters;
 
   public:
 	void run();

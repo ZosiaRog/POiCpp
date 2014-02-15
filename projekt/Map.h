@@ -1,8 +1,9 @@
 #include<vector>
 #include<string>
+#include <utility>
 
-#include "2_Field.h"
-#include "1_Character.h"
+#include "Field.h"
+#include "Character.h"
 
 using namespace std;
 
@@ -20,4 +21,7 @@ class Map {
 	~Map();
 	Field* getField(int x, int y) { return fields[x][y]; }
 	void putCharacter(Character* character);
+	void grabCharacter(Character* character);
+	void moveCharacter(Character* character, Field* wanted_field);
+	void buryDead(Character* character);
 };
