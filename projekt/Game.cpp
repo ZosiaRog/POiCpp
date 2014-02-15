@@ -2,6 +2,9 @@
 #include <string>
 #include <iostream>
 #include <utility>
+#include <iomanip>
+#include <cstdlib>
+#include <ctime>
 
 #include "Game.h"
 #include "IntelligentCharacters.h"
@@ -106,6 +109,7 @@ void Game::run(){
 
 bool Game::init(const string file){
 	readMap(file);
+	return true;
 }
 
 void Game::initDisplay(){}

@@ -2,10 +2,12 @@
 #define _INTELLIGENTCHARACTERS_H_
 
 #include "Character.h"
+#include "FightingCharacter.h"
 
 class IntelligentCharacter : public Character{
   public:
 	IntelligentCharacter(char symbol, pair<int, int> position) : Character(symbol, position) {}
+	virtual bool recognize(FightingCharacter* a) { a->decideEntry(this); }
 };
 
 

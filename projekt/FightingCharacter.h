@@ -5,13 +5,15 @@
 
 #include <iomanip>
 #include <cstdlib>
-#include <time.h>
+#include <ctime>
 #include <utility>
 #include <vector>
 
-#include "IntelligentCharacters.h"
 
 class Field;
+class IntelligentCharacter;
+class HumanCharacter;
+
 class FightingCharacter: public Character {
 
  protected:
@@ -36,9 +38,17 @@ class FightingCharacter: public Character {
 	void decreaseActionPoints(int a);
 	void changeHealth(int wound) { health -= wound; }
 	virtual Field* move(vector<Field*> neighbourhood) = 0;
-	virtual bool decideEntry(Character* native) {return true;}
-//	virtual bool decideEntry(IntelligentCharacter* native);
+	virtual bool decideEntry(FightingCharacter* native) = 0;
+	virtual bool decideEntry(IntelligentCharacter* native) = 0;
+	virtual bool decideEntry(HumanCharacter* native) = 0;
+	virtual bool recognize(FightingCharacter* a) { a->decideEntry(this); }
 };
+
+class HumanCharacter : public FightingCharacter {
+  public:
+	HumanCharacter(char symbol, int action_points_per_term, pair<int, int> position) : FightingCharacter(symbol, action_points_per_term, position) {}
+};
+
 
 
 #endif

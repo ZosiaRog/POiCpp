@@ -19,3 +19,12 @@ Field* WildCharacter::move(vector <Field*> neighbourhood){
 	int direction = rand() % possible.size();
 	return possible[direction];
 }
+
+bool WildCharacter::decideEntry(HumanCharacter* native){ return false; }
+bool WildCharacter::decideEntry(IntelligentCharacter* native){ return false; }
+
+bool AgressiveCharacter::decideEntry(FightingCharacter* native){ return true; }
+bool CowardCharacter::decideEntry(FightingCharacter* native){ return (native->getHealth() < 50); }
+bool FussyCharacter::decideEntry(FightingCharacter* native){ return false; }
+bool FussyCharacter::decideEntry(HumanCharacter* native) { return true; }
+bool NeutralCharacter::decideEntry(FightingCharacter* native){ return false; }

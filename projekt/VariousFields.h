@@ -7,7 +7,7 @@
 
 #include <iomanip>
 #include <cstdlib>
-#include <time.h>
+#include <ctime>
 
 class CaveField : public Field {
   public:
@@ -45,7 +45,10 @@ class SwampField : public Field {
 	bool safe;
   public:
 	SwampField(pair<int, int> position) : Field('&', 2, position){
-		safe = rand() % 2;
+		srand(time(NULL));
+		int l = rand();
+		cout << l << endl;
+		safe = l % 2;
 		if(safe){
 			cout << "Safe swamp" << endl;
 		} else{

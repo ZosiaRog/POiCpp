@@ -24,8 +24,7 @@ class Character {
 	void setPosition(pair<int, int> new_position){ position = new_position;}
 	virtual bool meet(FightingCharacter* a){ return false; }
 	virtual bool isDead(){ return false; }
-	virtual bool decideEntry(Character* native){ return true;}
-	bool recognize(FightingCharacter* a);
+	virtual bool recognize(FightingCharacter* a) = 0;
 };
 
 #endif
