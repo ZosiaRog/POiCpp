@@ -34,10 +34,10 @@ class FightingCharacter: public Character {
 	int getHealth(){ return health; }
 	int getStrength(){ return strength; }
 	void decreaseActionPoints(int a);
-	void changeHealth(int new_health) { health = new_health; }
-	virtual Field* move(vector<Field*> neighbourhood) { return NULL; }
-	virtual bool decideEntry(FightingCharacter* native){ return false; }
-	virtual bool decideEntry(IntelligentCharacter* native){ return false; }
+	void changeHealth(int wound) { health -= wound; }
+	virtual Field* move(vector<Field*> neighbourhood) = 0;
+	virtual bool decideEntry(Character* native) {return true;}
+//	virtual bool decideEntry(IntelligentCharacter* native);
 };
 
 

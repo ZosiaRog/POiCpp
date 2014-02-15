@@ -7,6 +7,7 @@
 
 #include "Map.h"
 #include "Character.h"
+#include "MiloszCharacter.h"
 
 using namespace std;
 
@@ -19,8 +20,9 @@ class Game {
 	void initDisplay();
 	void stopDisplay();
 	void refreshView();
-	bool gameOver() {return false;}
+	bool gameOver();
 
+	MiloszCharacter* milosz;
 	Map* map;
 	list<Character*> static_characters;
 	list<FightingCharacter*> fighting_characters;

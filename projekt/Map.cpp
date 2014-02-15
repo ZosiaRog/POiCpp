@@ -2,7 +2,7 @@
 #include "Map.h"
 #include "VariousFields.h"
 
-Map::Map(vector<string> lines, int N, int M) : N(N), M(M){
+Map::Map(vector<string> lines, int N, int M) : N(N), M(M), treasure_found(false){
 	pair<int, int> position;
 	vector<Field*> rocks_row_upper, rocks_row_lower;
 	for(int j=0; j<M+2; j++){
@@ -13,12 +13,13 @@ Map::Map(vector<string> lines, int N, int M) : N(N), M(M){
 	}
 	fields.push_back(rocks_row_upper);
 
-	for(int i=1; i<=N; i++){
+	for(int i=0; i<N; i++){
 		vector<Field*> row;
-		position = make_pair(i, 0);
+		position = make_pair(i+1, 0);
 		row.push_back(new RockField(position));
-		for(int j=1; j<=M; j++){
-			pair<int, int> position = make_pair(i, j);
+		for(int j=0; j<M; j++){
+			pair<int, int> position = make_pair(i+1, j+1);
+//			cout << "("<<i<<", "<<j<<") " << lines[i][j] << endl;
 			switch(lines[i][j]){
 				case '=': row.push_back(new RoadField(position)); break;
 				case '#': row.push_back(new RockField(position)); break;
@@ -27,11 +28,11 @@ Map::Map(vector<string> lines, int N, int M) : N(N), M(M){
 				case '&': row.push_back(new SwampField(position)); break;
 				case '~': row.push_back(new RiverField(position)); break;
 				case '*': row.push_back(new CaveField(position)); break;
-				case '$': row.push_back(new TreasureField(position)); break;
-		//		default: std::cerr << "Niepoprawna mapa." << std::endl; TODO Dodaj wyjątek
+				case '$': row.push_back(new TreasureField(position)); treasure_field = (*row.end()); break;
+//				default: std::cerr << "Niepoprawna mapa (" << lines[i][j] << ")" << std::endl; // TODO Dodaj wyjątek //if treasure_field == NULL
 			}
 		}
-		pair<int, int> position = make_pair(i, M+1);
+		pair<int, int> position = make_pair(i+1, M+1);
 		row.push_back(new RockField(position));
 		fields.push_back(row);
 	}
@@ -56,8 +57,17 @@ void Map::buryDead(Character* character){
 	field->buryDead();
 }
 
-void Map::moveCharacter(Character* character, Field* wanted_field) { 
+void Map::moveCharacter(FightingCharacter* character, Field* wanted_field) { 
 	grabCharacter(character);
 	character->setPosition(wanted_field->getPosition());
-	putCharacter(character);
+	wanted_field->enter(character);	
+}
+
+vector<Field*> Map::getNeighbourhood(pair<int, int> place){
+	vector<Field*> neighbourhood;
+	neighbourhood.push_back(getField(place.first, place.second -1));
+	neighbourhood.push_back(getField(place.first -1, place.second));
+	neighbourhood.push_back(getField(place.first, place.second +1));
+	neighbourhood.push_back(getField(place.first +1, place.second));
+	return neighbourhood;
 }

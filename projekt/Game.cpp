@@ -19,7 +19,7 @@ void Game::makeCharacter(char c, int x, int y){
 		case 'B': addStaticCharacter(new BardCharacter(position)); break; //TODO dodać pozostałych i im zmienić konstruktory
 		case 'Z': addStaticCharacter(new QuackDoctorCharacter(position)); break;
 		case 'S': addStaticCharacter(new InnkeeperCharacter(position)); break;
-		case 'M': addFightingCharacter(new MiloszCharacter(position)); break;
+		case 'M': milosz = new MiloszCharacter(position); addFightingCharacter(milosz); break;
 		case 'P': addFightingCharacter(new SearcherCharacter(position)); break;
 		case 'N': addFightingCharacter(new NeutralCharacter(position)); break;
 		case 'T': addFightingCharacter(new CowardCharacter(position)); break;
@@ -67,6 +67,11 @@ bool Game::readMap(const string filename){
 	return false;
 }
 
+bool Game::gameOver(){
+	if(milosz->isDead()) return true;
+	return false;
+}
+
 void Game::run(){
 	initDisplay();
 
@@ -75,8 +80,10 @@ void Game::run(){
 	while(!gameOver()){
 		cout << "Iteracja" << endl;
 		if(!((*current)->isDead())){
-			vector<Field*> neighbourhood;
-			Field* wanted_field = (*current)->move(neighbourhood);
+			cout << "not dead " << (*current)->getSymbol() << endl;
+			pair<int, int> position = (*current)->getPosition(); 
+			Field* wanted_field = (*current)->move(map->getNeighbourhood(position));
+			cout << "got move" << endl;
 			if(wanted_field != NULL){
 				if(wanted_field->tryToEnter(*current)) {
 					if((*current)->isDead()) {
@@ -87,6 +94,8 @@ void Game::run(){
 				}
 				
 			}
+		} else {
+			cout << "dead " << (*current)->getSymbol() << endl;
 		}
 		current++;
 		if(current == fighting_characters.end()) current = fighting_characters.begin();

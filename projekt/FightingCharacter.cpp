@@ -17,3 +17,7 @@ bool FightingCharacter::meet(FightingCharacter* a){
 }
 
 bool FightingCharacter::isDead(){ return (health <= 0); }
+
+//virtual bool FightingCharacter::decideEntry(FightingCharacter* native) : decideEntry(native) {return true;}
+//virtual bool FightingCharacter::decideEntry(IntelligentCharacter* native) : decideEntry(native) {return false;}
+

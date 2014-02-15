@@ -13,6 +13,8 @@ class Map {
 	vector<vector<Field*> > fields;
 	int M;
 	int N;
+	bool treasure_found;
+	Field* treasure_field;
 
   public:
 	int getN() { return N; };
@@ -22,6 +24,9 @@ class Map {
 	Field* getField(int x, int y) { return fields[x][y]; }
 	void putCharacter(Character* character);
 	void grabCharacter(Character* character);
-	void moveCharacter(Character* character, Field* wanted_field);
+	void moveCharacter(FightingCharacter* character, Field* wanted_field);
 	void buryDead(Character* character);
+	bool treasureFound(){ return treasure_found;}
+	Field* getTreasureField(){ return treasure_field;}
+	vector<Field*> getNeighbourhood(pair<int, int> place);
 };
