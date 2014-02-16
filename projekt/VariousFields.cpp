@@ -6,10 +6,12 @@ void RiverField::interactWith(FightingCharacter* a) {
 }
 
 void SwampField::interactWith(FightingCharacter* a) {
-	
+	if(!safe){
+		a->setHealth(-5);
+	}
 }
 
-void TreasureField::interactWith(FightingCharacter* a) {
+void TreasureField::interactWith(HumanCharacter* a) {
 	found = true;
 	a->setTreasureFound();
 }

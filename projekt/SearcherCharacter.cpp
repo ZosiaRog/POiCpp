@@ -6,6 +6,6 @@ Field* SearcherCharacter::move(vector <Field*> neighbourhood){
 		if((neighbourhood[i]->enoughActionPoints(this))&&(neighbourhood[i]->getOccupiedBy()==NULL)) possible.push_back(neighbourhood[i]);
 	}
 	if(possible.size()==0) return NULL;
-	int direction = rand() % (possible.size()+1);
+	int direction = rand() % (possible.size());
 	return possible[direction];
 }

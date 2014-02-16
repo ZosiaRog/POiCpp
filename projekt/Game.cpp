@@ -103,11 +103,14 @@ void Game::run(){
 	}
 
 	if(!display.isEndGame()){
-		// GAME OVER
 		if(milosz->getTreasureFound()){
 			display.congratulations();
 		} else {
-			display.gameOver();
+			if(map->treasureFound()){
+				display.treasureFound();
+			} else {
+				display.youDied();
+			}
 		}
 	}
 	display.stop();
@@ -119,6 +122,4 @@ bool Game::init(const string file){
 }
 
 
-Game::~Game(){
-	// TODO: usuń mapę i charactersy
-}
+Game::~Game(){}

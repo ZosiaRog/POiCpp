@@ -1,4 +1,3 @@
-// TODO Czy mapa jest prawidłowa (rozmiary i znaczki)
 #include "Map.h"
 #include "VariousFields.h"
 
@@ -30,7 +29,7 @@ Map::Map(vector<string> lines, int N, int M) : N(N), M(M){
 				case '~': row.push_back(new RiverField(position)); break;
 				case '*': row.push_back(new CaveField(position)); break;
 				case '$': treasure = new TreasureField(position); row.push_back(treasure), treasures.push_back(treasure); break;
-//				default: std::cerr << "Niepoprawna mapa (" << lines[i][j] << ")" << std::endl; // TODO Dodaj wyjątek //if treasure_field == NULL
+				default: std::cerr << "Niepoprawna mapa (" << lines[i][j] << ")" << std::endl;
 			}
 		}
 		pair<int, int> position = make_pair(i+1, M+1);

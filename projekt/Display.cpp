@@ -17,6 +17,10 @@ void Display::stop(){
 }
 void Display::refreshView(Map* map, MiloszCharacter* milosz){
 	move(0,0);
+	printw("Poruszaj sie strzalkami.");
+	move(1,0);
+	printw("Wybierz 'n', aby zrezygnowac z ruchu i 'q', aby skonczyc gre.");
+	move(3,0);
 	printw("Zdrowie ");
 	printw("%d", milosz->getHealth());
 	printw("  Bron ");
@@ -56,9 +60,19 @@ void Display::initColors(){
 		init_pair(2, COLOR_CYAN, COLOR_BLACK);
 		init_pair(10, COLOR_RED, COLOR_BLACK);
 		init_pair(11, COLOR_CYAN, COLOR_BLACK);
+		init_pair(20, COLOR_GREEN, COLOR_BLACK);
+		init_pair(21, COLOR_MAGENTA, COLOR_BLACK);
 
 		symbColors['$'] = 10;
-		symbColors['#'] = 11;
+		symbColors['S'] = 20;
+		symbColors['Z'] = 20;
+		symbColors['B'] = 20;
+		symbColors['M'] = 10;
+		symbColors['P'] = 21;
+		symbColors['N'] = 21;
+		symbColors['W'] = 21;
+		symbColors['T'] = 21;
+		symbColors['A'] = 21;
 }
 
 void print_in_middle(WINDOW* win, int starty, int startx, int width, string str)
@@ -92,6 +106,17 @@ void Display::gameOver(){
 	getch();
 }
 
+void Display::treasureFound(){
+	attron(COLOR_PAIR(2));
+	print_in_middle(stdscr, LINES / 2, 0, 0, "Treasure found. Game over.");
+	getch();
+}
+void Display::youDied(){
+	attron(COLOR_PAIR(2));
+	print_in_middle(stdscr, LINES / 2, 0, 0, "You died.");
+	getch();
+} 
+
 void Display::drawField(int i, int j, char c){
 	int col = 0;
 	if(symbColors.count(c)){
@@ -99,7 +124,7 @@ void Display::drawField(int i, int j, char c){
 	}
 	
 	attron(COLOR_PAIR(col));
-	mvaddch(i + 2, j, c);
+	mvaddch(i + 5, j, c);
 	attroff(COLOR_PAIR(col));
 }
 
