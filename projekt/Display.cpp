@@ -1,5 +1,7 @@
 #include "Display.h"
 #include "Map.h"
+#include <string>
+using namespace std;
 
 #include "MiloszCharacter.h"
 
@@ -37,15 +39,68 @@ void Display::refreshView(Map* map, MiloszCharacter* milosz){
 	printw("Punkty akcji ");
 	printw("%d    ", milosz->getActionPoints());
 
+	initColors();
 	int N = map->getN();
 	int M = map->getM();
 	for (int i = 0; i < N+2; i++){
 		for (int j = 0; j < M+2; j++){
 			char symb = (map->getField(i, j)->getSymbolToShow());
-			mvaddch(i + 2, j, symb);
+			drawField(i, j, symb);
 		}
 	}
 	refresh();			/* Print it on to the real screen */
+}
+
+void Display::initColors(){
+		init_pair(1, COLOR_RED, COLOR_BLACK);
+		init_pair(2, COLOR_CYAN, COLOR_BLACK);
+		init_pair(10, COLOR_RED, COLOR_BLACK);
+		init_pair(11, COLOR_CYAN, COLOR_BLACK);
+
+		symbColors['$'] = 10;
+		symbColors['#'] = 11;
+}
+
+void print_in_middle(WINDOW* win, int starty, int startx, int width, string str)
+{	int length, x, y;
+	float temp;
+
+	win = stdscr;
+	getyx(win, y, x);
+	if(startx != 0)
+		x = startx;
+	if(starty != 0)
+		y = starty;
+	if(width == 0)
+		width = 80;
+
+	length = str.length();
+	temp = (width - length)/ 2;
+	x = startx + (int)temp;
+	mvwprintw(win, y, x, "%s", str.c_str());
+	refresh();
+}
+
+void Display::congratulations() {
+	attron(COLOR_PAIR(1));
+	print_in_middle(stdscr, LINES / 2, 0, 0, "Viola !!! Treasure :D ");
+	getch();
+}
+void Display::gameOver(){
+	attron(COLOR_PAIR(2));
+	print_in_middle(stdscr, LINES / 2, 0, 0, "Game over :( :( ");
+	getch();
+}
+
+void Display::drawField(int i, int j, char c){
+	int col = 0;
+	if(symbColors.count(c)){
+		col = symbColors[c];
+	}
+	
+	attron(COLOR_PAIR(col));
+	mvaddch(i + 2, j, c);
+	attroff(COLOR_PAIR(col));
 }
 
 int Display::getCommand(){

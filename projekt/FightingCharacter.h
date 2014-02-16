@@ -17,13 +17,14 @@ class HumanCharacter;
 
 class FightingCharacter: public Character {
  protected:
+	bool treasure_found;
 	int health;
 	int strength;
 	Armor* armor;
 	Gift* gift;
 	Weapon* weapon;
 
-	FightingCharacter(char symbol, int action_points_per_turn, pair<int, int> position) : Character(symbol, position), armor(NULL), gift(NULL), weapon(NULL){
+	FightingCharacter(char symbol, int action_points_per_turn, pair<int, int> position) : Character(symbol, position), armor(NULL), gift(NULL), weapon(NULL), treasure_found(false){
 		this->action_points_per_turn = action_points_per_turn;
 		resetNewTurn();
 		srand(time(NULL));
@@ -55,7 +56,8 @@ class FightingCharacter: public Character {
 	Armor* getArmor(){ return armor; }
 	Gift* getGift(){ return gift; }
 	Gift* takeGift(){ Gift* toGive = gift; gift = NULL; return toGive; }
-
+	void setTreasureFound(){ treasure_found = true; }
+	bool getTreasureFound(){ return treasure_found; }
 };
 
 class HumanCharacter : public FightingCharacter {

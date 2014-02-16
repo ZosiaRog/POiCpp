@@ -101,6 +101,15 @@ void Game::run(){
 		current++;
 		if(current == fighting_characters.end()) current = fighting_characters.begin();
 	}
+
+	if(!display.isEndGame()){
+		// GAME OVER
+		if(milosz->getTreasureFound()){
+			display.congratulations();
+		} else {
+			display.gameOver();
+		}
+	}
 	display.stop();
 }
 

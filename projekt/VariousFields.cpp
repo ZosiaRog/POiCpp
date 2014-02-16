@@ -11,4 +11,5 @@ void SwampField::interactWith(FightingCharacter* a) {
 
 void TreasureField::interactWith(FightingCharacter* a) {
 	found = true;
+	a->setTreasureFound();
 }
