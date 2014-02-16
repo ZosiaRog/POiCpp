@@ -1,6 +1,7 @@
 #include "Display.h"
 #include "Map.h"
 
+#include "MiloszCharacter.h"
 
 void Display::init(){
 	initscr();			/* Start curses mode 		  */
@@ -44,8 +45,13 @@ void Display::refreshView(Map* map, MiloszCharacter* milosz){
 			mvaddch(i + 2, j, symb);
 		}
 	}
-
-	
-
 	refresh();			/* Print it on to the real screen */
+}
+
+int Display::getCommand(){
+	int command = getch();
+	if(command == 'q'){
+		end_game = true;
+	}
+	return command;
 }

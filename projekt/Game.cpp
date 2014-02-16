@@ -21,7 +21,7 @@ void Game::makeCharacter(char c, int x, int y){
 		case 'B': addStaticCharacter(new BardCharacter(position, map)); break; //TODO dodać pozostałych i im zmienić konstruktory
 		case 'Z': addStaticCharacter(new QuackDoctorCharacter(position)); break;
 		case 'S': addStaticCharacter(new InnkeeperCharacter(position)); break;
-		case 'M': milosz = new MiloszCharacter(position); addFightingCharacter(milosz); break;
+		case 'M': milosz = new MiloszCharacter(position, &display); addFightingCharacter(milosz); break;
 		case 'P': addFightingCharacter(new SearcherCharacter(position)); break;
 		case 'N': addFightingCharacter(new NeutralCharacter(position)); break;
 		case 'T': addFightingCharacter(new CowardCharacter(position)); break;
@@ -78,10 +78,10 @@ void Game::run(){
 	display.init();
 
 	list<FightingCharacter*>::iterator current = fighting_characters.begin();	
-	while(!gameOver()){
+	while(!gameOver() && !display.isEndGame()){
 		if(!((*current)->isDead())){
 			(*current)->resetNewTurn();
-			while((*current)->getActionPoints() > 0){
+			while((*current)->getActionPoints() > 0 && !display.isEndGame()){
 				display.refreshView(map, milosz);
 				pair<int, int> position = (*current)->getPosition(); 
 				Field* wanted_field = (*current)->move(map->getNeighbourhood(position));

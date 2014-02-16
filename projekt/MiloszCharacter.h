@@ -4,11 +4,13 @@
 #include "FightingCharacter.h"
 #include "IntelligentCharacters.h"
 #include "Items.h"
-	
+#include "Display.h"
 
 class MiloszCharacter : public HumanCharacter {
+  private:
+	Display* display;
   public:
-	MiloszCharacter(pair<int, int> position) : HumanCharacter('M', 3, position){
+	MiloszCharacter(pair<int, int> position, Display* display) : HumanCharacter('M', 3, position), display(display){
 		health = 50;
 		strength = 50;
 	}
