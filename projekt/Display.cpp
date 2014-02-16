@@ -5,10 +5,10 @@
 
 void Display::init(){
 	initscr();			/* Start curses mode 		  */
-	//raw(); 
+	raw(); 
 	noecho();
 	keypad(stdscr, TRUE);
-//	start_color();
+	start_color();
 }
 void Display::stop(){
 	endwin();			/* End curses mode		  */
