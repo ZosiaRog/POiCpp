@@ -28,6 +28,7 @@ class Field {
 	void putCharacter(Character* character) { occupied_by = character; }
 	void grabCharacter() { occupied_by = NULL; }
 	void enter(FightingCharacter* a){ putCharacter(a); interactWith(a);}
+	void flatten(){ points_to_enter = 1; }
 };
 
 #endif

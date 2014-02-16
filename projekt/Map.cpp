@@ -2,7 +2,8 @@
 #include "Map.h"
 #include "VariousFields.h"
 
-Map::Map(vector<string> lines, int N, int M) : N(N), M(M), treasure_found(false){
+Map::Map(vector<string> lines, int N, int M) : N(N), M(M){
+	TreasureField* treasure;
 	pair<int, int> position;
 	vector<Field*> rocks_row_upper, rocks_row_lower;
 	for(int j=0; j<M+2; j++){
@@ -28,7 +29,7 @@ Map::Map(vector<string> lines, int N, int M) : N(N), M(M), treasure_found(false)
 				case '&': row.push_back(new SwampField(position)); break;
 				case '~': row.push_back(new RiverField(position)); break;
 				case '*': row.push_back(new CaveField(position)); break;
-				case '$': row.push_back(new TreasureField(position)); treasure_field = (*row.end()); break;
+				case '$': treasure = new TreasureField(position); row.push_back(treasure), treasures.push_back(treasure); break;
 //				default: std::cerr << "Niepoprawna mapa (" << lines[i][j] << ")" << std::endl; // TODO Dodaj wyjątek //if treasure_field == NULL
 			}
 		}
@@ -40,9 +41,13 @@ Map::Map(vector<string> lines, int N, int M) : N(N), M(M), treasure_found(false)
 	fields.push_back(rocks_row_lower);
 }
 
-void Map::putCharacter(Character* character){
+void Map::putCharacter(Character* character, bool flattenField){
 	pair<int, int> position = character->getPosition();
-	getField(position.first, position.second)->putCharacter(character);
+	Field* field = getField(position.first, position.second);
+	field->putCharacter(character);
+	if(flattenField){
+		field->flatten();
+	}
 }
 
 void Map::grabCharacter(Character* character){
@@ -71,3 +76,16 @@ vector<Field*> Map::getNeighbourhood(pair<int, int> place){
 	neighbourhood.push_back(getField(place.first +1, place.second));
 	return neighbourhood;
 }
+
+void Map::setTreasuresVisible(bool visible) {
+	for(int i = 0; i < treasures.size(); i++){
+		treasures[i]->setVisible(visible);
+	}
+}
+
+bool Map::treasureFound(){
+	for(int i = 0; i < treasures.size(); i++){
+		if(treasures[i]->wasFound()) return true;
+	}
+	return false;
+}	

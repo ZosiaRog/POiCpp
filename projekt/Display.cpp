@@ -7,6 +7,7 @@ void Display::init(){
 	//raw(); 
 	noecho();
 	keypad(stdscr, TRUE);
+//	start_color();
 }
 void Display::stop(){
 	endwin();			/* End curses mode		  */
@@ -16,10 +17,24 @@ void Display::refreshView(Map* map, MiloszCharacter* milosz){
 	printw("Zdrowie ");
 	printw("%d", milosz->getHealth());
 	printw("  Bron ");
-	printw("%.2lf", milosz->getWeapon());
+	if (milosz->getWeapon()) { 
+		printw("%.2lf", milosz->getWeapon()->getStrength());
+	} else {
+		printw(" --- ");
+	}
 	printw("  Zbroja ");
-	printw("%.2lf", milosz->getArmor());
-	if(milosz->getGift()) printw("  Prezent ");
+	if (milosz->getArmor()) { 
+		printw("%.2lf", milosz->getArmor()->getStrength());
+	} else {
+		printw(" --- ");
+	}
+	if(milosz->getGift()) {
+		printw("  Prezent ");
+	} else {
+		printw("          ");
+	}
+	printw("Punkty akcji ");
+	printw("%d    ", milosz->getActionPoints());
 
 	int N = map->getN();
 	int M = map->getM();

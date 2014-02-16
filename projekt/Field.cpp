@@ -12,7 +12,7 @@ char Field::getSymbolToShow() {
 void Field::buryDead(){
 	if(isOccupied() && occupied_by->isDead()){
 		grabCharacter();
-	}	
+	}
 }
 
 bool Field::enoughActionPoints(FightingCharacter* a){
@@ -25,10 +25,10 @@ bool Field::enoughActionPoints(FightingCharacter* a){
 
 bool Field::tryToEnter(FightingCharacter* a){
 	if(!enoughActionPoints(a)) return false;
+	a->useActionPoints(points_to_enter);
 	if(isOccupied()) { 
 		occupied_by->meet(a);
-	} else {
+		buryDead();
 	}
-	buryDead();
 	return !isOccupied();
 }

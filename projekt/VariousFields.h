@@ -55,11 +55,13 @@ class SwampField : public Field {
 class TreasureField : public Field {
   private:
 	bool visible;
+	bool found;
   public:
-	TreasureField(pair<int, int> position) : Field('$', 1, position), visible(false) {}
+	TreasureField(pair<int, int> position) : Field('$', 1, position), visible(false), found(false) {}
 	virtual void interactWith(FightingCharacter* a);
 	virtual char getSymbolToShow(){ if(!visible){ return '^';} else { return symbol;}}
-	void ShowTreasure(){ visible = true;}
+	void setVisible(bool visible){ this->visible = visible; }
+	bool wasFound() { return found; }
 };
 
 #endif

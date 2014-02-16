@@ -2,6 +2,7 @@
 
 void RiverField::interactWith(FightingCharacter* a) {
 	a->changeHealth(20);
+	buryDead();
 }
 
 void SwampField::interactWith(FightingCharacter* a) {
@@ -9,5 +10,5 @@ void SwampField::interactWith(FightingCharacter* a) {
 }
 
 void TreasureField::interactWith(FightingCharacter* a) {
-	//wchodzi poszukiwacz -> treasure_found
+	found = true;
 }

@@ -4,10 +4,10 @@ OBJ = Game.o Map.o Field.o VariousFields.o Character.o FightingCharacter.o WildC
 all: $(PROG_NAME)
 	
 $(PROG_NAME): $(PROG_NAME).cpp $(OBJ)
-	g++ $^ -o $(PROG_NAME) -lncurses -g
+	g++ $^ -o $(PROG_NAME) -lncurses 
 
 %.o: %.cpp %.h
-	g++ -c $^ -g
+	g++ -c $^ 
 
 clean:
 	rm *~ *.o *.gch 

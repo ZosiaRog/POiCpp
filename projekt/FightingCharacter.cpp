@@ -1,10 +1,14 @@
 #include "FightingCharacter.h"
 
-int FightingCharacter::calculateHitPoints(){ return double(strength*health)/100; }
+int FightingCharacter::calculateHitPoints(){
+	double modifier = 1 + ((weapon != NULL) ? weapon->getStrength() : 0);
+	return (double(strength*health)*modifier)/100;
+}
 
 void FightingCharacter::receiveHitPoints(int hit_points){
 //	cout << "receiving " << hit_points << " hit points " << endl;
-	health -= hit_points;
+	double modifier = 1 + ((armor != NULL) ? armor->getStrength() : 0);
+	health -= double(hit_points)/modifier;
 }
 
 bool FightingCharacter::meet(FightingCharacter* a){
@@ -16,8 +20,5 @@ bool FightingCharacter::meet(FightingCharacter* a){
 	return false;
 }
 
+
 bool FightingCharacter::isDead(){ return (health <= 0); }
-
-//virtual bool FightingCharacter::decideEntry(FightingCharacter* native) : decideEntry(native) {return true;}
-//virtual bool FightingCharacter::decideEntry(IntelligentCharacter* native) : decideEntry(native) {return false;}
-

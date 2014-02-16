@@ -18,7 +18,7 @@ using namespace std;
 void Game::makeCharacter(char c, int x, int y){
 	pair<int, int> position(x, y);
 	switch(c){
-		case 'B': addStaticCharacter(new BardCharacter(position)); break; //TODO dodać pozostałych i im zmienić konstruktory
+		case 'B': addStaticCharacter(new BardCharacter(position, map)); break; //TODO dodać pozostałych i im zmienić konstruktory
 		case 'Z': addStaticCharacter(new QuackDoctorCharacter(position)); break;
 		case 'S': addStaticCharacter(new InnkeeperCharacter(position)); break;
 		case 'M': milosz = new MiloszCharacter(position); addFightingCharacter(milosz); break;
@@ -32,11 +32,11 @@ void Game::makeCharacter(char c, int x, int y){
 
 void Game::addStaticCharacter(Character* character){
 	static_characters.push_back(character);
-	map->putCharacter(character);
+	map->putCharacter(character, true);
 }
 void Game::addFightingCharacter(FightingCharacter* character){
 	fighting_characters.push_back(character);
-	map->putCharacter(character);
+	map->putCharacter(character, false);
 }
 
 bool Game::readMap(const string filename){
@@ -71,7 +71,7 @@ bool Game::readMap(const string filename){
 
 bool Game::gameOver(){
 	if(milosz->isDead()) return true;
-	return false;
+	return map->treasureFound();
 }
 
 void Game::run(){
@@ -80,22 +80,26 @@ void Game::run(){
 	list<FightingCharacter*>::iterator current = fighting_characters.begin();	
 	while(!gameOver()){
 		if(!((*current)->isDead())){
-			pair<int, int> position = (*current)->getPosition(); 
-			Field* wanted_field = (*current)->move(map->getNeighbourhood(position));
-			if(wanted_field != NULL){
-				if(wanted_field->tryToEnter(*current)) {
-					if((*current)->isDead()) {
-						map->buryDead(*current);
-					} else {
-						map->moveCharacter(*current, wanted_field);
+			(*current)->resetNewTurn();
+			while((*current)->getActionPoints() > 0){
+				display.refreshView(map, milosz);
+				pair<int, int> position = (*current)->getPosition(); 
+				Field* wanted_field = (*current)->move(map->getNeighbourhood(position));
+				if(wanted_field == NULL){
+					break;
+				} else {
+					if(wanted_field->tryToEnter(*current)) {
+						if((*current)->isDead()) {
+							map->buryDead(*current);
+						} else {
+							map->moveCharacter(*current, wanted_field);
+						}
 					}
 				}
-				
 			}
 		}
 		current++;
 		if(current == fighting_characters.end()) current = fighting_characters.begin();
-		display.refreshView(map, milosz);
 	}
 	display.stop();
 }

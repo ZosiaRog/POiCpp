@@ -10,14 +10,15 @@
 
 using namespace std;
 
+class TreasureField;
+
 class Map {
 
   private:
 	vector<vector<Field*> > fields;
 	int M;
 	int N;
-	bool treasure_found;
-	Field* treasure_field;
+	vector<TreasureField*> treasures;
 
   public:
 	int getN() { return N; };
@@ -25,13 +26,13 @@ class Map {
 	Map(vector<string>, int N, int M);
 	~Map();
 	Field* getField(int x, int y) { return fields[x][y]; }
-	void putCharacter(Character* character);
+	void putCharacter(Character* character, bool flattenField);
 	void grabCharacter(Character* character);
 	void moveCharacter(FightingCharacter* character, Field* wanted_field);
 	void buryDead(Character* character);
-	bool treasureFound(){ return treasure_found;}
-	Field* getTreasureField(){ return treasure_field;}
 	vector<Field*> getNeighbourhood(pair<int, int> place);
+	void setTreasuresVisible(bool visible);
+	bool treasureFound();
 };
 
 #endif

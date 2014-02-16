@@ -7,6 +7,7 @@
 using namespace std;
 
 class FightingCharacter;
+class MiloszCharacter;
 
 class Character {
 
